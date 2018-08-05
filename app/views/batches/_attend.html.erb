@@ -1,0 +1,9 @@
+<h1>enter your student_id</h1>
+
+<%= form_for @attendance do |a| %>
+<%= a.hidden_field :classday_id, value: c.id %>
+<%= a.hidden_field :present, value: 'yes' %>
+<%= a.label :student_id %>
+<%= a.text_area :student_id %>
+<%= a.submit %>
+<% end %>

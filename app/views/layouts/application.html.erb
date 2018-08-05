@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SCANit</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+
+    <div class = "auth-info-links">
+      
+     <% if teacher_signed_in? %>
+       
+       <div id="sign-in-up">
+         <div> <%= current_teacher.email %> </div>
+         <div class="box"> <%= link_to 'Sign Out', destroy_teacher_session_path, method: :delete %> </div>
+       </div><hr>
+
+     <% else %>
+
+       <div id="sign-in-up">
+         <div class="box"> <%= link_to 'Sign In', new_teacher_session_path %> </div>
+         <div class="box"> <%= link_to 'Sign Up', new_teacher_registration_path %> </div>
+       </div> <hr>
+     <% end %>
+
+    </div>
+
+    <%= yield %>
+  </body>
+</html>

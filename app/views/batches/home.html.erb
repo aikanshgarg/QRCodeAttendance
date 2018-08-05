@@ -1,0 +1,89 @@
+<!-- <h1>Batches#home</h1>
+<p>Find me in app/views/batches/home.html.erb</p> -->
+
+-----Add a new batch----
+<div id="new-batch-form">
+	<%= form_for @batch do |b| %>
+	<%= b.label :name %>
+	<%= b.text_area :name %>
+	<%= b.submit %>
+	<% end %>
+</div>
+
+<div id="batch-list">
+	<ul>
+		<div id="container">
+			
+		 <% @batches.reverse.each do |b| %>
+		  
+		 <li> 
+		  	<%= b.name %> | <%= b.teacher.email %>
+		  	<% if teacher_signed_in? && b.teacher_id == current_teacher.id %>
+		  	<%= link_to 'Delete', destroy_batch_path(b.id), method: :delete %>
+		  	<% end %> 
+
+		  <div id="students-list">
+		  	<ul>
+		  		<% b.students.reverse.each do |s| %>
+		  		<li> <%= s.name %> </li>
+		  		<% end %>
+		  	</ul>
+		  	
+		  	-----Add a new student to batch----
+		  	<% if teacher_signed_in? %>
+		  	<div id="new-student-form">
+		  		<%= form_for @new_student do |s| %>
+		  		<%= s.label :name %>
+		  		<%= s.text_area :name %>
+		  		<%= s.hidden_field :batch_id, value: b.id %>
+		  		<%= s.submit %>
+		  		<% end %>		  		
+		  	</div>
+		  	<% end %>
+
+		  </div>
+
+		  
+		  <div id="classdays-list">
+
+		  	<ul>
+		  	   <% b.classdays.reverse.each do |c| %>
+		  	   ----classdays with attendance list here---
+		  	   
+		  	   <li> 
+		  	   	<%= c.date %> | <%= link_to 'Mark attendance', controller :, method: :get %>
+		  	   	<ul>
+		  	   		<% c.attendances.each do |a| %>
+		  	   		<li> <%= a.student_id %> </li>
+		  	   	    <% end %>
+		  	   	</ul>
+		  	   </li>
+
+		  	   <% end %>
+		    </ul>
+		    
+		    -----Add a new classday to batch----
+		  	<% if teacher_signed_in? %>
+		  	<div id="new-classday-form">
+		  		<%= form_for @classday do |c| %>
+		  		<%= c.hidden_field :batch_id, value: b.id %>
+		  		<%= c.label :date %>
+		  		<%= c.text_area :date %>
+		  		<%= c.submit %>
+		  		<% end %>		  		
+		  	</div>
+		  	<% end %>
+		    	
+		    </div>
+
+		  </div>
+
+		 </li>
+ 
+		 <% end %>
+
+		</div>
+		
+	</ul>
+	
+</div>
